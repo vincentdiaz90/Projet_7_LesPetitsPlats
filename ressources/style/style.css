@@ -1,0 +1,205 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+        /*  logo du site  */
+
+header{
+    margin-top: 5vh;
+    text-align: center;
+}
+
+header h1{
+    display: none;
+}
+
+header img{
+    width: 18em;
+    height: auto;
+}
+
+
+
+        /*  Filtre n°1 : filtre global  */
+
+#recherch{
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+    margin-bottom: 60px;
+}
+
+#champ-recherch{
+    width: 90%;
+    padding: 27px 10px;
+    background-color: rgba(0, 0, 0, 0.07);
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+#champ-recherch::placeholder{
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 1.7em;
+    padding-left: 1em;
+}
+
+#recherch .fa-search{
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+
+        /*  Filtre n°2 : Ingrédients / Appareils / Ustensils  */
+
+.filter-search, #recipes-listing{
+    display: none;
+}
+
+.filter-type{
+    display: inline-block;
+}
+
+.filter-type:nth-child(1){
+    margin-left: 5%;
+}
+
+.filter-btn{
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+    position: relative;
+    width: 200px;
+    height: 80px;
+    margin-right: 25px;
+}
+
+#btn-ingredients{
+    background-color: #3282f7;
+}
+
+#btn-appareils{
+    background-color: #68d9a4;
+}
+
+#btn-ustensiles{
+    background-color: #ed6454; 
+}
+
+.filter-btn span, .filter-btn i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+.filter-btn span{
+    left: 10%;
+    font-size: 22px;
+}
+
+.filter-btn i{
+    right: 10%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+
+/*  Cartes des plats  */
+
+#liste-plats{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 60px;
+    row-gap: 60px;
+    margin: 50px;
+}
+
+.plat{
+    width: 500px;
+    height: auto;
+    background-color: rgba(0,0,0,0.07);
+    border: none;
+    border-radius: 7px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.image-plat{
+    width: 100%;
+    height: 250px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.description-plat{
+    height: 250px;
+    position: relative;
+}
+
+.description-plat .titre-plat{
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.temps-preparation{
+    position: absolute;
+    top: 10%;
+    right: 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 110px;
+}
+
+.fa-clock{
+    color: rgba(0,0,0,1);
+    font-weight: 100!important;
+    font-size: 30px;
+
+}
+
+.temps-preparation span{
+    font-size: 25px;
+}
+
+.liste-ingredient{
+    position: absolute;
+    bottom: 20%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.type-ingredient, .nombre-ingredient{
+    font-size: 15px;
+}
+
+.type-ingredient{
+    font-weight: 600;
+}
+
+.recette{
+    position: absolute;
+    bottom: 20%;
+    right: 5%;
+    width: 200px;
+    font-size: 15px;
+}
+
+
