@@ -64,8 +64,22 @@ header img{
 
         /*  Filtre n°2 : Ingrédients / Appareils / Ustensils  */
 
-.filter-search, #recipes-listing{
+
+
+.filter-search{
     display: none;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 90px;
+}
+
+#btn-appareils{
+    display: none;
+}
+
+#search-appareils{
+    display: block;
 }
 
 .filter-type{
@@ -88,14 +102,72 @@ header img{
 
 #btn-ingredients{
     background-color: #3282f7;
+  
 }
 
-#btn-appareils{
+.filter-field{
+    padding: 15px 25px;
+    width: 100%;
+}
+
+.filter-field::placeholder{
+    color: rgba(350,350,350,0.5);
+    font-size: 18px;
+}
+
+#ingredients-field{
+    background-color: #3282f7;
+    border: none;
+}
+
+#appliance-field{
+    background-color: #ed6454; 
+}
+
+#ustensils-field{
     background-color: #68d9a4;
 }
 
+.filter-chevron{
+    position: absolute;
+    top: 8%;
+    right: 10%;
+}
+
+#ingredients-filter-type, #appliance-filter-type, #utensils-filter-type{
+    list-style: none;
+    color: #f1f1f1;
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    row-gap: 30px;
+    padding-top: 25px;
+}
+
+#ingredients-filter-type{
+    background-color: #3282f7;
+}
+
+#appliance-filter-type{
+    background-color: #ed6454;  
+}
+
+#utensils-filter-type{
+    background-color: #68d9a4;
+}
+
+#ingredients-filter-type li{
+    cursor: pointer;
+    display: inline-block;
+}
+
+#btn-appareils{
+    background-color: #ed6454;
+}
+
 #btn-ustensiles{
-    background-color: #ed6454; 
+    background-color: #68d9a4; 
 }
 
 .filter-btn span, .filter-btn i{
@@ -110,14 +182,19 @@ header img{
     font-size: 22px;
 }
 
-.filter-btn i{
+.filter-btn i, .filter-close-chevron{
     right: 10%;
     font-size: 20px;
     cursor: pointer;
 }
 
+.filter-close-chevron{
+    color: #fff;
+}
 
-
+#recipes-listing{
+    display: none;
+}
 /*  Cartes des plats  */
 
 #liste-plats{
