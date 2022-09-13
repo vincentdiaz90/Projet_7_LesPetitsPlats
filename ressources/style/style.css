@@ -42,8 +42,10 @@ header img{
     padding: 27px 10px;
     background-color: rgba(0, 0, 0, 0.07);
     border: none;
+    outline: none;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    font-size: 20px;
 }
 
 #champ-recherch::placeholder{
@@ -61,18 +63,38 @@ header img{
     cursor: pointer;
 }
 
+        /*  Tag  */
+
+#filter-tag{
+    width: 100%;
+}
+
+.tagUl{
+    margin-left: 5%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tagLi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 20px;
+    margin: 15px;
+    background-color: blue;
+    border-radius: 15px;
+    color: #f1f1f1;
+    
+}
+
+
+
+
 
         /*  Filtre n°2 : Ingrédients / Appareils / Ustensils  */
 
-        /*
-#btn-ingredients{
-    opacity: 0;
-}
 
-#search-ingredients{
-    margin-top: 0px;
-}
-*/
 
 
 #filters-listing {
@@ -80,6 +102,9 @@ header img{
     width: 100%;
     height: 100px;
     display: flex;
+    justify-content: left;
+    column-gap: 20px;
+    row-gap: 90px;
 }
 
 .filter-type{
@@ -92,12 +117,15 @@ header img{
     margin-left: 5%;
 }
 
+
+
+
 .filter-btn{
     border: none;
     border-radius: 7px;
     color: #fff;
     position: absolute;
-    width: 200px;
+    width: 100%;
     height: 80px;
     margin-right: 25px;
     cursor: pointer;
@@ -130,7 +158,7 @@ header img{
 .chevron-open-ingredients.active, .chevron-open-appareils.active, .chevron-open-ustensiles.active{
     z-index: 100;
     top: 30%;
-    right: -130px;
+    right: 5%;  
 }
 
 .filter-btn span{
@@ -157,6 +185,7 @@ header img{
     border-radius: 5px;
     overflow: hidden;
     margin-top: 90px; 
+    width: 100%;
 }
 
 #search-ingredients, #search-appareils, #search-ustensiles{
@@ -204,6 +233,11 @@ header img{
     padding-top: 25px;
 }
 
+#ingredients-filter-div, #appliance-filter-div, #ustensils-filter-div{
+    height: 250px;
+    overflow-y: scroll;
+}
+
 #ingredients-filter-type{
     background-color: #3282f7;
 }
@@ -212,7 +246,7 @@ header img{
     background-color: #ed6454;  
 }
 
-#utensils-filter-type{
+#ustensils-filter-type{
     background-color: #68d9a4;
 }
 

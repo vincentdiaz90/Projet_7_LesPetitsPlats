@@ -24,7 +24,9 @@
             </div>
         </form>
 
-        <div id="filter-tag"></div>
+        <div id="filter-tag">
+            <ul class="tagUl"></ul>
+        </div>
 
         <div id="filters-listing">
             <div class="filter-type" id="ingredients">
@@ -36,20 +38,7 @@
                     <form method="GET" action="#">
                         <input type="text" class="filter-field" id="ingredients-field" placeholder="Rechercher un ingrédient">
                     </form>
-                    <ul class="filter-listing" id="ingredients-filter-type">
-                        <li class="nom-filtre">Lait de coco</li>
-                        <li class="nom-filtre">Sucre</li>
-                        <li class="nom-filtre">Concombre</li>
-                        <li class="nom-filtre">Oignon</li>
-                        <li class="nom-filtre">Maïs</li>
-                        <li class="nom-filtre">Pomme</li>
-                        <li class="nom-filtre">Glaçons</li>
-                        <li class="nom-filtre">Tomate</li>
-                        <li class="nom-filtre">Poulet</li>
-                        <li class="nom-filtre">Vinaigrette</li>
-                        <li class="nom-filtre">Carotte</li>
-                        <li class="nom-filtre">Beurre</li>
-                    </ul>
+                    <div id="ingredients-filter-div"></div>
                 </div>
             </div>
             <div class="filter-type" id="appliances">
@@ -61,20 +50,7 @@
                     <form method="GET" action="#">
                         <input type="text" class="filter-field" id="appliance-field" placeholder="Rechercher un appareil">
                     </form>
-                    <ul class="filter-listing" id="appliance-filter-type">
-                        <li class="nom-filtre">Lait de coco</li>
-                        <li class="nom-filtre">Sucre</li>
-                        <li class="nom-filtre">Concombre</li>
-                        <li class="nom-filtre">Oignon</li>
-                        <li class="nom-filtre">Maïs</li>
-                        <li class="nom-filtre">Pomme</li>
-                        <li class="nom-filtre">Glaçons</li>
-                        <li class="nom-filtre">Tomate</li>
-                        <li class="nom-filtre">Poulet</li>
-                        <li class="nom-filtre">Vinaigrette</li>
-                        <li class="nom-filtre">Carotte</li>
-                        <li class="nom-filtre">Beurre</li>
-                    </ul>
+                    <div id="appliance-filter-div"></div>
                 </div>
             </div>
             <div class="filter-type" id="utensils">
@@ -86,20 +62,7 @@
                     <form method="GET" action="#">
                         <input type="text" class="filter-field" id="ustensils-field" placeholder="Rechercher un ustensile">
                     </form>
-                    <ul class="filter-listing" id="utensils-filter-type">
-                        <li class="nom-filtre">Lait de coco</li>
-                        <li class="nom-filtre">Sucre</li>
-                        <li class="nom-filtre">Concombre</li>
-                        <li class="nom-filtre">Oignon</li>
-                        <li class="nom-filtre">Maïs</li>
-                        <li class="nom-filtre">Pomme</li>
-                        <li class="nom-filtre">Glaçons</li>
-                        <li class="nom-filtre">Tomate</li>
-                        <li class="nom-filtre">Poulet</li>
-                        <li class="nom-filtre">Vinaigrette</li>
-                        <li class="nom-filtre">Carotte</li>
-                        <li class="nom-filtre">Beurre</li>
-                    </ul>
+                    <div id="ustensils-filter-div"></div>
                 </div>
             </div>
         </div>
@@ -109,47 +72,13 @@
         </div>
 
 
-        <div id="liste-plats">
-            <article class="plat">
-                <div class="image-plat"></div>
-                <div class="description-plat">
-                    <h2 class="titre-plat">Limonade de Coco</h2>
-                    <p class="temps-preparation">
-                        <i class="fas fa-light fa-clock"></i>
-                        <span>10 min</span>
-                    </p>
-                    <div class="liste-ingredient">
-                        <p>
-                            <span class="type-ingredient">Lait de coco: </span>
-                            <span class="nombre-ingredient">400ml</span>
-                        </p>
-                        <p>
-                            <span class="type-ingredient">Jus de citron: </span>
-                            <span class="nombre-ingredient">2</span>
-                        </p>
-                        <p>
-                            <span class="type-ingredient">Crème de coco: </span>
-                            <span class="nombre-ingredient">4 cuillères</span>
-                        </p>
-                        <p>
-                            <span class="type-ingredient">Sucre: </span>
-                            <span class="nombre-ingredient">20g</span>
-                        </p>
-                        <p>
-                            <span class="type-ingredient">Glaçon: </span>
-                            <span class="nombre-ingredient">2</span>
-                        </p>
-                    </div>
-                    <div class="recette">
-                        <p>Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée</p>
-                    </div>
-                </div>
-            </article>
-        </div>
+        <div id="liste-plats"></div>
 
     </main>
 
     <script src="ressources/script/recipes.js"></script>
-    <script type="module" src="ressources/script/script.js"></script>
+    <script src="ressources/script/recipesCardOnLoad.js"></script>
+    <script src="ressources/script/filterInputs.js"></script>
+    <script src="ressources/script/script.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 
-import { recipes } from "./recipes.js"
 
         /* Ouverture modale filter listing  */
 
@@ -96,7 +95,7 @@ function openActiveListing(){
         chevronAppliances.classList.contains('filter-open-chevron') ||
         chevronUstensils.classList.contains('filter-open-chevron')
     ){
-        listingIngredientAppliancesUstensils.style.height = "250px";
+        listingIngredientAppliancesUstensils.style.height = "280px";
     }
 
 
@@ -107,7 +106,7 @@ function openActiveListing(){
 
         btnIngredients.classList.add('active');
 
-        divIngredients.style.width = "350px";
+        divIngredients.style.width = "50%";
         divAppliances.style.width = "200px";
         divUtensils.style.width = "200px";
 
@@ -124,7 +123,7 @@ function openActiveListing(){
         btnAppareils.classList.add('active');
 
         divIngredients.style.width = "200px";
-        divAppliances.style.width = "350px";
+        divAppliances.style.width = "480px";
         divUtensils.style.width = "200px";
 
         chevronAppliances.classList.add("active");
@@ -140,7 +139,7 @@ function openActiveListing(){
 
         divIngredients.style.width = "200px";
         divAppliances.style.width = "200px";
-        divUtensils.style.width = "350px";
+        divUtensils.style.width = "480px";
 
         chevronAppliances.classList.remove("active");
         chevronUstensils.classList.add("active");
@@ -183,85 +182,6 @@ function openActiveListing(){
         btnIngredients.classList.remove('active');
         btnAppareils.classList.remove('active');
     }
-
 }
 
-
-
-
-        /*  Intégration carte dynamique  */
-
-
-const listPlats = document.querySelector('#liste-plats');
-
-console.log(recipes)  
-
-
-for(let i = 0; i < recipes.length; i++){  
-
-
-    //console.log(recipes[i].ingredients);
-
-    let wrapper = document.createElement('article');
-    wrapper.classList.add('plat');
-
-    //console.log(wrapper);
-
-        wrapper.innerHTML = `
-
-            <div class="image-plat"></div>
-            <div class="description-plat">
-                <h2 class="titre-plat">${recipes[i].name}</h2>
-                <p class="temps-preparation">
-                    <i class="fas fa-light fa-clock"></i>
-                    <span>${recipes[i].time} min</span>
-                </p>
-                <div class="liste-ingredient"></div>
-                <div class="recette">
-                    <p>${recipes[i].description}</p>
-                </div>
-            </div>
-
-        `
-
-    listPlats.appendChild(wrapper);
-
-}
-
-console.log(recipes[3].ingredients[2].ingredient)
-console.log(recipes[3].ingredients[2].quantity)
-console.log(recipes[3].ingredients[2].unit)
-
-
-
-let listeIngredient = document.querySelectorAll('.liste-ingredient');
-
-listeIngredient.forEach(element => {
-
-    for(let i=0; i<recipes.length; i++){
-
-        //console.log(recipes.length)
-
-        if(1==1){}
-
-        for(let j=0; j<recipes[i].ingredients.length; j++){
-
-        console.log(recipes[1].ingredients)
-
-        //console.log(listeIngredient.length);
-
-            let wrapper = document.createElement('p');
-
-            if(recipes[i] == i){
-
-                wrapper.innerHTML = `
-                    <span class="type-ingredient">${ recipes[i].ingredients[j].ingredient }</span>
-                    <span class="nombre-ingredient">${ recipes[i].ingredients[j].quantity } ${ recipes[i].ingredients[j].unit ? recipes[i].ingredients[j].unit : "" }</span>
-                `
-                element.appendChild(wrapper);
-            }
-        }
-    }
-
-});
 
