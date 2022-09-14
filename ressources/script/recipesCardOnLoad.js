@@ -78,6 +78,8 @@ function filterDataLoadingCard(e){
 }
 
 
+
+
 function initialLoadCard(){
     const listPlats = document.querySelector('#liste-plats');
 
@@ -179,6 +181,8 @@ function initialLoadFilterIngredients(){
     wrapper.id = 'ingredients-filter-type';
     wrapper.classList.add('filter-listing');
 
+    filtreIngredient.innerHTML = ""
+
     filterIngredients();
 
     filtreIngredient.appendChild(wrapper);
@@ -193,6 +197,9 @@ function initialLoadFilterIngredients(){
             wrapperLi.innerText = `
                 ${ingredients[i]}
             `
+            wrapperLi.addEventListener("click", (e) => {
+                ingredientsTagEvent(e)
+            })
             wrapper.appendChild(wrapperLi);
         }
         
@@ -221,6 +228,8 @@ function initialLoadFilterAppliances(){
     wrapperAppliances.id = 'appliance-filter-type';
     wrapperAppliances.classList.add('filter-listing');
 
+    filtreAppliance.innerHTML = "";
+
     filterAppliances()
 
     filtreAppliance.appendChild(wrapperAppliances);
@@ -234,6 +243,9 @@ function initialLoadFilterAppliances(){
             wrapperLiAppliances.innerText = `
                 ${appliances[i]}
             `
+            wrapperLiAppliances.addEventListener("click", (e) => {
+                appliancesTag(e)
+            })
             //console.log(wrapperLiAppliances);
             wrapperAppliances.appendChild(wrapperLiAppliances);
         }
@@ -270,6 +282,8 @@ function initialLoadFilterUstensils(){
     wrapperUstensils.id = 'ustensils-filter-type';
     wrapperUstensils.classList.add('filter-listing');
 
+    filtreUstensils.innerHTML = "";
+
     filterUstensils()
 
     filtreUstensils.appendChild(wrapperUstensils);
@@ -284,6 +298,10 @@ function initialLoadFilterUstensils(){
             wrapperLiUstensils.innerText = `
                 ${ustensils[i]}
             `
+            wrapperLiUstensils.addEventListener("click", (e) => {
+                
+                ustensilsTag(e)
+            })
             
             wrapperUstensils.appendChild(wrapperLiUstensils);
         }

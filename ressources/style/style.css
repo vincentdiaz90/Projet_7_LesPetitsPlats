@@ -80,12 +80,21 @@ header img{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 20px 20px;
+    padding: 0px 35px 20px 20px;
     margin: 15px;
-    background-color: blue;
+    /*background-color: blue;*/
     border-radius: 15px;
-    color: #f1f1f1;
-    
+    color: #000;
+    position: relative;
+    border: 1px solid #000;
+}
+
+.fa-x{
+    position: absolute;
+    top: 15%;
+    right: 8%;
+    font-size: 13px;
+    cursor: pointer;
 }
 
 
@@ -359,4 +368,3 @@ header img{
     overflow: hidden;
     overflow-y: scroll;
 }
-
