@@ -174,7 +174,7 @@ function filterDataLoadingIngredientsTag(e){
             wrapperLi.addEventListener("click", (e) => {
                 ingredientsTagEvent(e);
                 filterByTag();
-                initialLoadCard();
+                LoadCard();
             })
 
             wrapper.appendChild(wrapperLi);
@@ -310,12 +310,11 @@ function filterByTagIngredient(valeur, nvTableau){
                 //console.log(valeurTab[i]);    
                 if(valeurTab[i].toLowerCase() == ingredient.toLowerCase()){
                     nvTabIngredient.push(element);
+                    nvTabIngredient = [...new Set(nvTabIngredient)];
                 }
             }
-        })  
-    });
-
-    nvTabIngredient = [...new Set(nvTabIngredient)];
+        });  
+    }); 
     console.log(nvTabIngredient);
 
     return nvTabIngredient;

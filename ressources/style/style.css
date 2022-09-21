@@ -315,15 +315,16 @@ header img{
 
 .description-plat .titre-plat{
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 5%;
     font-weight: 500;
     font-size: 25px;
+    max-width: 300px;
 }
 
 .temps-preparation{
     position: absolute;
-    top: 10%;
+    top: 5%;
     right: 8%;
     display: flex;
     justify-content: space-between;
@@ -344,7 +345,8 @@ header img{
 
 .liste-ingredient{
     position: absolute;
-    bottom: 20%;
+    max-width: 250px;
+    top: 40%;
     left: 5%;
     display: flex;
     flex-direction: column;

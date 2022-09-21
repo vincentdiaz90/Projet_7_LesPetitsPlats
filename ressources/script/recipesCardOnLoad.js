@@ -8,14 +8,14 @@ let recipesActif = recipes;
         /*  Intégration carte dynamique  */
 
 window.addEventListener('load', function() {
-    initialLoadCard();
+    LoadCard();
     initialLoadFilter();
 });
         
 globalFilter.addEventListener('input', function(e) {
 
     filterDataLoadingCard(e);
-    initialLoadCard();
+    LoadCard();
     initialLoadFilter();
 });
 
@@ -81,7 +81,7 @@ function filterDataLoadingCard(e){
 
 
 
-function initialLoadCard(){
+function LoadCard(){
     const listPlats = document.querySelector('#liste-plats');
 
     for(let i = 0; i < recipesActif.length; i++){  
