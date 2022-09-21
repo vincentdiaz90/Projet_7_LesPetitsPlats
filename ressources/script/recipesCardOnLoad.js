@@ -2,6 +2,7 @@ console.log(recipes);
 
 const globalFilter = document.querySelector('#champ-recherch');
 
+
 let recipesActif = recipes;
 
         /*  Intégration carte dynamique  */
@@ -122,9 +123,14 @@ function initialLoadCard(){
                     let wrapper = document.createElement('p');
         
                     wrapper.innerHTML = `
-                        <span class="type-ingredient">${ recipesActif[i].ingredients[j].ingredient }: </span>
-                        <span class="nombre-ingredient">${ recipesActif[i].ingredients[j].quantity ? recipesActif[i].ingredients[j].quantity : recipesActif[i].ingredients[j].quantite } ${ recipesActif[i].ingredients[j].unit ? recipesActif[i].ingredients[j].unit : "" }</span>
+                        <span class="type-ingredient">${ recipesActif[i].ingredients[j].ingredient } </span>
+                        <span class="nombre-ingredient">: ${ recipesActif[i].ingredients[j].quantity ? recipesActif[i].ingredients[j].quantity : recipesActif[i].ingredients[j].quantite } ${ recipesActif[i].ingredients[j].unit ? recipesActif[i].ingredients[j].unit : "" }</span>
                     `
+
+                    if(!recipesActif[i].ingredients[j].quantity && !recipesActif[i].ingredients[j].quantite){
+                        wrapper.childNodes[3].innerText = "";
+                    }
+
                     listeIngredient[k].appendChild(wrapper);
         
                 }
@@ -139,6 +145,7 @@ function initialLoadCard(){
         
         
                     /*  Intégration filtre dynamique  */
+
 let ingredients = [];
 let appliances = [];
 let ustensils = [];

@@ -6,6 +6,8 @@ initialLoadFilter();
         // Création des tags correspondant au clique
 
 let tag = [];
+let liTag= [];
+let valeurTab = [];
 
 let uniqueValeurTag;
 let uniqueValeurTagSplit = [];
@@ -26,9 +28,9 @@ function ingredientsTagEvent(e){
     let variable = e.target.innerText;
     tag.push('ingredients_' + variable);
     getType();
-    
     divTagUl.innerHTML = "";
     createTag();
+    deletTag();
     filterByTag();
 }
 
@@ -36,22 +38,22 @@ function appliancesTag(e){
 
     let variable = e.target.innerText;
     tag.push('appliances_'+variable);
-    
     getType();
     divTagUl.innerHTML = "";
     createTag();
-    filterByTag()
+    deletTag();
+    filterByTag();
 }
 
 function ustensilsTag(e){
 
     let variable = e.target.innerText;
     tag.push('ustensils_'+variable);
-
     getType();
     divTagUl.innerHTML = "";
     createTag();
-    filterByTag()
+    deletTag();
+    filterByTag();
 }
 
 function getType(){
@@ -62,19 +64,15 @@ function getType(){
         element = element[1]
         uniqueValeurTagSplit.push(element)
         uniqueValeurTagSplit = [...new Set(uniqueValeurTagSplit)];
-        //console.log(uniqueValeurTagSplit);
     }); 
 }
-
 
 function createTag(){
 
     let wrapperLiTag;
     let wrapperLiTagCross;
-    let liTag= []
 
     for(let i = 0; i < uniqueValeurTagSplit.length; i++){
-        //console.log(tag[i]);
         wrapperLiTag = document.createElement('li');
         wrapperLiTag.classList.add('tagLi');
         
@@ -90,25 +88,33 @@ function createTag(){
         wrapperLiTagCross.classList.add('fa-x');
 
         wrapperLiTag.appendChild(wrapperLiTagCross);
-    }
+    };
+}
 
-    liTag.forEach(li => {    
-        li.childNodes[5].addEventListener("click", (e) =>{
-            //console.log(e.path[1].innerText);
-            //console.log(wrapperLiTag);
-            wrapperLiTag.remove(e.target);
+function deletTag(){
+
+    let liTags = document.querySelectorAll('.tagLi');
+
+    liTags.forEach(li => {
+        li.childNodes[5].addEventListener("click", function(e) {          
+
             uniqueValeurTagSplit.forEach(element => {
-                //console.log(element);
                 if(e.path[1].innerText.toLowerCase() == element.toLowerCase()){
-                    console.log('toto')
-                    //uniqueValeurTagSplit.pop(element)
+                        // Utilisation de slice pour supprimer la valeur voulue donx besoin de l'index
+                    let index = uniqueValeurTagSplit.indexOf(element);
+                        // Supprimer les valeur du tableau sur lequel se base la création du li
+                    uniqueValeurTagSplit.splice(index, 1);
+                    uniqueValeurTag.splice(index, 1);
+                    tag.splice(index, 1);
+                        // Supprimer le li du DOM
+                    li.remove(e.target);
                 } 
-            });
-            
-
-        })  
+            })    
+        });
     });
 }
+
+
 
 
 // Recherche dynamique dans les filtres individuellement
@@ -168,6 +174,7 @@ function filterDataLoadingIngredientsTag(e){
             wrapperLi.addEventListener("click", (e) => {
                 ingredientsTagEvent(e);
                 filterByTag();
+                initialLoadCard();
             })
 
             wrapper.appendChild(wrapperLi);
@@ -255,20 +262,6 @@ function filterDataLoadingUstensilsTag(e) {
 
             // Filtre des cartes par les tag
 
-    // 1 - rentrer les valeurs des tags dans un tableau (déja dans : uniqueValeurTagSplit)
-    // 2 - faire un trie par le type de donnée (ingredient/appareil/ustensils) 2 méthodes :
-        // rajouter le type directement dans la fonction ingredientsTagEvent appliancesTag et ustensilsTag
-        // créer un tableau intermediaire dans lequel on met un correspondance clef valeur puis on le push ce tableau dans le tableau tag et on fait une recherche par correspondance du type
-    // 2 - Comparer avec le tableau des recettes (recipes)
-            // Si correspondance faire un trie et enregistrer ce trie comme nouvelle valeur de recipes pour la fonction filterDataLoadingCard
-    // 3 - Mettre en place une croix pour supprimer un tag
-    // 4 - Si clique sur une croix alors supprimer le tag puis supprimer sa valeur dans le tableau des tags puis faire un nouveau trie pour recipes
-
-
-
-
-
-
 
 function filterByTag(){
 
@@ -276,17 +269,17 @@ function filterByTag(){
 
     let nvTableau = recipesActif;
 
-    console.log(uniqueValeurTagSplit);
-    
 
+    
     uniqueValeurTag.forEach(tag => {
 
         let tagWithoutType = tag.split("_");
         let tagWithoutTypeUnique = [...new Set(tagWithoutType)]
-        console.log(tagWithoutTypeUnique);
+        
 
-        if(tagWithoutTypeUnique[0] == 'ingredients'){           
+        if(tagWithoutTypeUnique[0] == 'ingredients'){            
             nvTableau = filterByTagIngredient(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
+            
         }
         if(tagWithoutTypeUnique[0] == 'appliances'){           
             nvTableau = filterByTagAppliances(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
@@ -295,14 +288,17 @@ function filterByTag(){
             nvTableau = filterByTagUstensils(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
         }
     });
+
 }
 
 
 function filterByTagIngredient(valeur, nvTableau){
 
+    valeurTab.push(valeur);
+    valeurTab = [...new Set(valeurTab)];
+    //console.log(valeurTab);
 
     nvTableau.forEach(element => {
-        
         element.ingredients.forEach(el => {
 
             let ingredient = el.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
@@ -310,14 +306,17 @@ function filterByTagIngredient(valeur, nvTableau){
             //console.log(ingredient);
             //console.log(valeur);
 
-            if(valeur.toLowerCase() == ingredient){
-                nvTabIngredient.push(element);
-                nvTabIngredient = [...new Set(nvTabIngredient)];
+            for(let i=0 ; i < valeurTab.length; i++){
+                //console.log(valeurTab[i]);    
+                if(valeurTab[i].toLowerCase() == ingredient.toLowerCase()){
+                    nvTabIngredient.push(element);
+                }
             }
-        })
-       
+        })  
     });
-    //console.log(nvTabIngredient);
+
+    nvTabIngredient = [...new Set(nvTabIngredient)];
+    console.log(nvTabIngredient);
 
     return nvTabIngredient;
 }
