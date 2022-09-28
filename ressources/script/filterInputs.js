@@ -1,29 +1,17 @@
-
-initialLoadFilter();
-
-
-
         // Création des tags correspondant au clique
 
 let tag = [];
 let liTag= [];
-let valeurTab = [];
 
 let uniqueValeurTag;
 let uniqueValeurTagSplit = [];
 
-let nvTabIngredient = [];
-let nvTabAppliances = [];
-let nvTabUstensils = [];
 
-let liIngredients = document.querySelectorAll('#ingredients-filter-div .nom-filtre');
-let liAppliances = document.querySelectorAll('#appliance-filter-div .nom-filtre');
-let liUstensils = document.querySelectorAll('#ustensils-filter-div .nom-filtre');
 
 let divTagUl = document.querySelector('.tagUl');
 
 
-function ingredientsTagEvent(e){
+function ingredientsTag(e){
     
     let variable = e.target.innerText;
     tag.push('ingredients_' + variable);
@@ -31,7 +19,6 @@ function ingredientsTagEvent(e){
     divTagUl.innerHTML = "";
     createTag();
     deletTag();
-    filterByTag();
 }
 
 function appliancesTag(e){
@@ -42,7 +29,6 @@ function appliancesTag(e){
     divTagUl.innerHTML = "";
     createTag();
     deletTag();
-    filterByTag();
 }
 
 function ustensilsTag(e){
@@ -53,7 +39,6 @@ function ustensilsTag(e){
     divTagUl.innerHTML = "";
     createTag();
     deletTag();
-    filterByTag();
 }
 
 function getType(){
@@ -61,8 +46,8 @@ function getType(){
     uniqueValeurTag = [...new Set(tag)];
     uniqueValeurTag.forEach(element => {
         element = element.split('_');
-        element = element[1]
-        uniqueValeurTagSplit.push(element)
+        element = element[1];
+        uniqueValeurTagSplit.push(element);
         uniqueValeurTagSplit = [...new Set(uniqueValeurTagSplit)];
     }); 
 }
@@ -89,6 +74,7 @@ function createTag(){
 
         wrapperLiTag.appendChild(wrapperLiTagCross);
     };
+    
 }
 
 function deletTag(){
@@ -96,11 +82,11 @@ function deletTag(){
     let liTags = document.querySelectorAll('.tagLi');
 
     liTags.forEach(li => {
-        li.childNodes[5].addEventListener("click", function(e) {          
+        li.querySelector('i').addEventListener("click", function(e) {          
 
             uniqueValeurTagSplit.forEach(element => {
                 if(e.path[1].innerText.toLowerCase() == element.toLowerCase()){
-                        // Utilisation de slice pour supprimer la valeur voulue donx besoin de l'index
+                        // Utilisation de slice pour supprimer la valeur voulue donc besoin de l'index
                     let index = uniqueValeurTagSplit.indexOf(element);
                         // Supprimer les valeur du tableau sur lequel se base la création du li
                     uniqueValeurTagSplit.splice(index, 1);
@@ -108,10 +94,14 @@ function deletTag(){
                     tag.splice(index, 1);
                         // Supprimer le li du DOM
                     li.remove(e.target);
+
+                    filterByTag();
+                    loadCardByTag();
                 } 
             })    
         });
     });
+
 }
 
 
@@ -172,10 +162,9 @@ function filterDataLoadingIngredientsTag(e){
             `
 
             wrapperLi.addEventListener("click", (e) => {
-                ingredientsTagEvent(e);
                 filterByTag();
-                LoadCard();
-            })
+                loadCardByTag();
+            });
 
             wrapper.appendChild(wrapperLi);
         }
@@ -210,7 +199,8 @@ function filterDataLoadingAppliancesTag(e) {
             `
 
             wrapperLiAppliances.addEventListener("click", (e) => {
-                appliancesTag(e)
+                filterByTag();
+                loadCardByTag();
             })
 
             wrapperAppliances.appendChild(wrapperLiAppliances);
@@ -246,9 +236,9 @@ function filterDataLoadingUstensilsTag(e) {
                 ${listUstensilsTagActif[i]}
             `
 
-            wrapperLiUstensils.addEventListener("click", (e) => {
-                
-                ustensilsTag(e)
+            wrapperLiUstensils.addEventListener("click", (e) => {   
+                filterByTag();
+                loadCardByTag();
             })
             
             wrapperUstensils.appendChild(wrapperLiUstensils);
@@ -262,106 +252,103 @@ function filterDataLoadingUstensilsTag(e) {
 
             // Filtre des cartes par les tag
 
+nvTableau = [];
 
 function filterByTag(){
 
-    let globalTags = document.querySelectorAll('#filter-tag .tagLi');
+    recipes.forEach(recipe => {
 
-    let nvTableau = recipesActif;
+            uniqueValeurTag.forEach(tab => {
+                
+                let tabType = tab.split('_');
 
-
+                if(tabType[0] == 'ingredients'){   
+                    recipe.ingredients.forEach( ingredient => {
+                        if(ingredient.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))) {
+                            nvTableau.push(recipe);
+                        }
+                    });                    
+                }
     
-    uniqueValeurTag.forEach(tag => {
+                else if(tabType[0] == 'appliances'){           
+                    if(recipe.appliance.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))){
+                        nvTableau.push(recipe);
+                    }
+                }
+                else if(tabType[0] == 'ustensils'){    
+                    recipe.ustensils.forEach(ustensil => {
+                        if(ustensil.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))){
+                            nvTableau.push(recipe);
+                        }
+                    });
+                }
+            });
+        });
 
-        let tagWithoutType = tag.split("_");
-        let tagWithoutTypeUnique = [...new Set(tagWithoutType)]
-        
-
-        if(tagWithoutTypeUnique[0] == 'ingredients'){            
-            nvTableau = filterByTagIngredient(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
-            
-        }
-        if(tagWithoutTypeUnique[0] == 'appliances'){           
-            nvTableau = filterByTagAppliances(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
-        }
-        if(tagWithoutTypeUnique[0] == 'ustensils'){           
-            nvTableau = filterByTagUstensils(tagWithoutTypeUnique[1].replace(/[^a-zA-Z0-9]/g, ''), nvTableau);
-        }
-    });
+    nvTableau = [...new Set(nvTableau)];
+    //console.log(nvTableau);
 
 }
 
 
-function filterByTagIngredient(valeur, nvTableau){
+function loadCardByTag(){
 
-    valeurTab.push(valeur);
-    valeurTab = [...new Set(valeurTab)];
-    //console.log(valeurTab);
+    const listPlats = document.querySelector('#liste-plats');
 
-    nvTableau.forEach(element => {
-        element.ingredients.forEach(el => {
+    listPlats.innerHTML = "";
 
-            let ingredient = el.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+    for(let i = 0; i < nvTableau.length; i++){  
+    
+        let wrapper = document.createElement('article');
+        wrapper.classList.add('plat');
+    
+            wrapper.innerHTML = `
+                <div class="image-plat"></div>
+                <div class="description-plat">
+                    <h2 class="titre-plat">${nvTableau[i].name}</h2>
+                    <p class="temps-preparation">
+                        <i class="fas fa-light fa-clock"></i>
+                        <span>${nvTableau[i].time} min</span>
+                    </p>
+                    <div class="liste-ingredient"></div>
+                    <div class="recette">
+                        <p>${nvTableau[i].description}</p>
+                    </div>
+                </div>
+            `
+    
+        listPlats.appendChild(wrapper);
+    
+    }
 
-            //console.log(ingredient);
-            //console.log(valeur);
+    let listeIngredient = document.querySelectorAll('.liste-ingredient');
 
-            for(let i=0 ; i < valeurTab.length; i++){
-                //console.log(valeurTab[i]);    
-                if(valeurTab[i].toLowerCase() == ingredient.toLowerCase()){
-                    nvTabIngredient.push(element);
-                    nvTabIngredient = [...new Set(nvTabIngredient)];
+
+
+    for(let k = 0; k < listeIngredient.length; k++){
+        
+        for(let i = 0; i < nvTableau.length; i++){
+            
+            if( k == i ){
+        
+                for(let j=0; j<nvTableau[i].ingredients.length; j++){
+
+                    let wrapper = document.createElement('p');
+        
+                    wrapper.innerHTML = `
+                        <span class="type-ingredient">${ nvTableau[i].ingredients[j].ingredient } </span>
+                        <span class="nombre-ingredient">: ${ nvTableau[i].ingredients[j].quantity ? nvTableau[i].ingredients[j].quantity : nvTableau[i].ingredients[j].quantite } ${ nvTableau[i].ingredients[j].unit ? nvTableau[i].ingredients[j].unit : "" }</span>
+                    `
+
+                    if(!nvTableau[i].ingredients[j].quantity && !nvTableau[i].ingredients[j].quantite){
+                        wrapper.childNodes[3].innerText = "";
+                    }
+
+                    listeIngredient[k].appendChild(wrapper);
+        
                 }
             }
-        });  
-    }); 
-    console.log(nvTabIngredient);
-
-    return nvTabIngredient;
-}
-
-function filterByTagAppliances(valeur, nvTableau){
-
-
-    nvTableau.forEach(element => {
         
-        let appliance = element.appliance.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-
-        //console.log(appliance);
-        //console.log(valeur);
-
-        if(valeur.toLowerCase() == appliance){
-            nvTabAppliances.push(element);
-            nvTabAppliances = [...new Set(nvTabAppliances)];
-        }    
-    });
-
-    //console.log(nvTabAppliances);
-
-    return nvTabAppliances;
-}
-
-function filterByTagUstensils(valeur, nvTableau){
-
-
-    nvTableau.forEach(element => {
-        //console.log(element);
-        
-        element.ustensils.forEach(el => {
-
-            let ustensils = el.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-
-            //console.log(ustensils);
-            //console.log(valeur);
-
-            if(valeur.toLowerCase() == ustensils){
-                nvTabUstensils.push(element);
-                nvTabUstensils = [...new Set(nvTabUstensils)];
-            }
-        })
-       
-    });
-    //console.log(nvTabUstensils);
-
-    return nvTabUstensils;
+        }
+    }
 }

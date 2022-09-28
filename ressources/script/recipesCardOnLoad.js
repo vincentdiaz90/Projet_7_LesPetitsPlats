@@ -5,7 +5,11 @@ const globalFilter = document.querySelector('#champ-recherch');
 
 let recipesActif = recipes;
 
+
+
+
         /*  Intégration carte dynamique  */
+
 
 window.addEventListener('load', function() {
     LoadCard();
@@ -205,7 +209,7 @@ function initialLoadFilterIngredients(){
                 ${ingredients[i]}
             `
             wrapperLi.addEventListener("click", (e) => {
-                ingredientsTagEvent(e)
+                ingredientsTag(e);
             })
             wrapper.appendChild(wrapperLi);
         }
