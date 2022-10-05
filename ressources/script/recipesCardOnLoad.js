@@ -1,10 +1,8 @@
-console.log(recipes);
+//console.log(recipes);
 
 const globalFilter = document.querySelector('#champ-recherch');
 
-
 let recipesActif = recipes;
-
 
 
 
@@ -25,7 +23,6 @@ globalFilter.addEventListener('input', function(e) {
 
 
 
-
 function filterDataLoadingCard(e){
 
     const listPlats = document.querySelector('#liste-plats');
@@ -34,8 +31,6 @@ function filterDataLoadingCard(e){
 
     listPlats.innerHTML = "";
 
-
-
     recipesActif = [];
 
 
@@ -43,13 +38,13 @@ function filterDataLoadingCard(e){
         let valide = false;
         if(element.name.toLowerCase().includes(filterActive)){
             valide = true;
-            recipesActif.push(element)
+            recipesActif.push(element);
         } 
         
         if(valide == false) {
             for(ingredient of element.ingredients){
                 if(ingredient.ingredient.toLowerCase().includes(filterActive)){ 
-                    recipesActif.push(element)
+                    recipesActif.push(element);
                     valide = true;
                     break;
                 }
@@ -59,8 +54,7 @@ function filterDataLoadingCard(e){
         if(valide == false){
             if(element.appliance.toLowerCase().includes(filterActive)){
                 valide = true;
-                recipesActif.push(element);
-                
+                recipesActif.push(element); 
             }
         }
         
@@ -164,19 +158,28 @@ function initialLoadFilter(){
     initialLoadFilterUstensils();
 }     
     
-    
+   // quand on clique on ajoute le tag
+   // appel une fonction qui va trier nos recette par rapport liste de tag
+   //fonction qui prend nos list de tag et trie 
+   
+   
+
+
                         /*  filtre ingrédient  */
 
 function initialLoadFilterIngredients(){
 
+    ingredients = [];
 
-    for(let i=0; i<recipes.length; i++){
+    //console.log(recipesActif)
 
-        for(let j=0; j<recipes[i].ingredients.length; j++){
+    for(let i=0; i<recipesActif.length; i++){
+
+        for(let j=0; j<recipesActif[i].ingredients.length; j++){
     
-            let ingredient = recipes[i].ingredients[j].ingredient;
+            let ingredient = recipesActif[i].ingredients[j].ingredient;
     
-            ingredient = ingredient.toLowerCase();
+            ingredient = ingredient.toLowerCase().replace("î", 'i').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
             if(!ingredients.includes(ingredient)){
                 ingredients.push(ingredient);
@@ -184,10 +187,9 @@ function initialLoadFilterIngredients(){
         }
     }
 
-    
-
                         /* Intégration filtre ingrédient*/
-        
+
+    
     let wrapper = document.createElement('ul');
     wrapper.id = 'ingredients-filter-type';
     wrapper.classList.add('filter-listing');
@@ -198,17 +200,19 @@ function initialLoadFilterIngredients(){
 
     filtreIngredient.appendChild(wrapper);
 
+
     function filterIngredients(){
+
+        //console.log(ingredients);
         
         for(let i = 0; i < ingredients.length; i++){
     
             let wrapperLi = document.createElement('li');
             wrapperLi.classList.add('nom-filtre');
             
-            wrapperLi.innerText = `
-                ${ingredients[i]}
-            `
-            wrapperLi.addEventListener("click", (e) => {
+            wrapperLi.innerText = `${ingredients[i]}`
+
+            wrapperLi.addEventListener("click", function(e){
                 ingredientsTag(e);
             })
             wrapper.appendChild(wrapperLi);
@@ -251,11 +255,9 @@ function initialLoadFilterAppliances(){
             let wrapperLiAppliances = document.createElement('li');
             wrapperLiAppliances.classList.add('nom-filtre');
             
-            wrapperLiAppliances.innerText = `
-                ${appliances[i]}
-            `
-            wrapperLiAppliances.addEventListener("click", (e) => {
-                appliancesTag(e)
+            wrapperLiAppliances.innerText = `${appliances[i]}`
+            wrapperLiAppliances.addEventListener("click", function(e) {
+                appliancesTag(e);
             })
             //console.log(wrapperLiAppliances);
             wrapperAppliances.appendChild(wrapperLiAppliances);
@@ -306,11 +308,8 @@ function initialLoadFilterUstensils(){
             let wrapperLiUstensils = document.createElement('li');
             wrapperLiUstensils.classList.add('nom-filtre');
             
-            wrapperLiUstensils.innerText = `
-                ${ustensils[i]}
-            `
-            wrapperLiUstensils.addEventListener("click", (e) => {
-                
+            wrapperLiUstensils.innerText = `${ustensils[i]}`
+            wrapperLiUstensils.addEventListener("click", function(e) { 
                 ustensilsTag(e)
             })
             
