@@ -11,8 +11,8 @@ function ingredientsTag(e){
     let variable = e.target.innerText;
     tags.push('ingredients_' + variable);
     createTag(variable);
-    deletTag();
     filterTags();
+    deletTag();
 }
 
 function appliancesTag(e){
@@ -20,8 +20,8 @@ function appliancesTag(e){
     let variable = e.target.innerText;
     tags.push('appliances_'+variable);
     createTag(variable);
+    filterTags();
     deletTag();
-    filterTags()
 }
 
 function ustensilsTag(e){
@@ -29,8 +29,8 @@ function ustensilsTag(e){
     let variable = e.target.innerText;
     tags.push('ustensils_'+variable);
     createTag(variable);
+    filterTags();
     deletTag();
-    filterTags()
 }
 
 
@@ -54,6 +54,7 @@ function createTag(tagName){
     wrapperLiTag.appendChild(wrapperLiTagCross);
 
     divTagUl.appendChild(wrapperLiTag);
+
 
 
     let ingredientsFiltreActif = document.querySelectorAll("#ingredients-filter-type .nom-filtre");
@@ -87,6 +88,10 @@ function createTag(tagName){
             }
         });
     });
+
+    const globalFilter = document.querySelector('#champ-recherch');
+
+    globalFilter.value = "";
 
 }
 
@@ -165,6 +170,8 @@ ustensilsFilter.addEventListener('input', function(e) {
 
 
 
+
+
 function filterDataLoadingIngredientsTag(e){
 
     let filterActive = e.target.value.toLowerCase();
@@ -178,7 +185,8 @@ function filterDataLoadingIngredientsTag(e){
             ingredientFiltreActif.style.display = "none";
         }
     });
-    
+
+
 }
 
 
@@ -226,35 +234,45 @@ function filterTags() {
 
         // Intégration dans un tableau des tags actifs
 
-    let divTagUl = document.querySelector('.tagUl');
-    divTagUl = "";
     
     let recipesForActifTag = [];
 
-    let tagLi = "";
-    tagLi = document.querySelectorAll(".tagLi");
+    recipes.forEach(recipe => {  
 
-    tagLi.forEach(li => {
+        let variable = true;
 
-        recipes.forEach(recipe => {
+        tags.forEach(tag => {
 
-            recipe.ingredients.forEach(ingredient => {
-                if(ingredient.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') == li.innerText.replace(/[^a-zA-Z0-9]/g, '')){
-                    recipesForActifTag.push(recipe);
+            tag = tag.split('_');
+
+            if(tag[0] == "ingredients"){
+
+                let variableIngredients = false;
+
+                recipe.ingredients.forEach(ingredient => { 
+                    if(ingredient.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') == tag[1].replace(/[^a-zA-Z0-9]/g, '')){
+                        variableIngredients = true;
+                    }
+                });
+
+                if(variableIngredients == false){
+                    variable = false;
                 }
-            });
 
-            if(recipe.appliance.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') == li.innerText.replace(/[^a-zA-Z0-9]/g, '')){
-                recipesForActifTag.push(recipe);
+            } else if(tag[0] == "appliances"){
+                if(recipe.appliance.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') != tag[1].replace(/[^a-zA-Z0-9]/g, '')){
+                    variable = false;
+                }
+            } else if(tag[0] == "ustensils"){ 
+                if(!recipe.ustensils.includes(tag[1])){
+                    variable = false;
+                }
             }
-
-            recipe.ustensils.forEach(ustensil => {
-                if(ustensil.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') == li.innerText.replace(/[^a-zA-Z0-9]/g, '')){
-                    recipesForActifTag.push(recipe);
-                }
-            })
-
         });
+
+        if(variable == true){
+            recipesForActifTag.push(recipe);
+        }
         
     });
 
@@ -267,7 +285,7 @@ function filterTags() {
     const listPlats = document.querySelector('#liste-plats');
     listPlats.innerHTML = "";
 
-    if(tagLi.length != 0){
+    if(tags.length != 0){
 
         recipesForActifTag.forEach(element => {
             let wrapper = document.createElement('article');
@@ -321,116 +339,11 @@ function filterTags() {
             
             }
         }
+        initialLoadFilter(recipesForActifTag);
     } else {
         LoadCard();
-        initialLoadFilter();
+        initialLoadFilter(recipesActif);
     }
 
-
+    return recipesForActifTag;
 }
-
-
-
-
-
-
-
-
-// function filterByTag(){
-
-//     recipes.forEach(recipe => {
-
-//             uniqueValeurTag.forEach(tab => {
-                
-//                 let tabType = tab.split('_');
-
-//                 if(tabType[0] == 'ingredients'){   
-//                     recipe.ingredients.forEach( ingredient => {
-//                         if(ingredient.ingredient.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))) {
-//                             nvTableau.push(recipe);
-//                         }
-//                     });                    
-//                 }
-    
-//                 else if(tabType[0] == 'appliances'){           
-//                     if(recipe.appliance.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))){
-//                         nvTableau.push(recipe);
-//                     }
-//                 }
-//                 else if(tabType[0] == 'ustensils'){    
-//                     recipe.ustensils.forEach(ustensil => {
-//                         if(ustensil.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(tabType[1].toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))){
-//                             nvTableau.push(recipe);
-//                         }
-//                     });
-//                 }
-//             });
-//         });
-
-//     nvTableau = [...new Set(nvTableau)];
-//     console.log(nvTableau);
-
-// }
-
-
-// function loadCardByTag(){
-
-//     const listPlats = document.querySelector('#liste-plats');
-
-//     listPlats.innerHTML = "";
-
-//     for(let i = 0; i < nvTableau.length; i++){  
-    
-//         let wrapper = document.createElement('article');
-//         wrapper.classList.add('plat');
-    
-//             wrapper.innerHTML = `
-//                 <div class="image-plat"></div>
-//                 <div class="description-plat">
-//                     <h2 class="titre-plat">${nvTableau[i].name}</h2>
-//                     <p class="temps-preparation">
-//                         <i class="fas fa-light fa-clock"></i>
-//                         <span>${nvTableau[i].time} min</span>
-//                     </p>
-//                     <div class="liste-ingredient"></div>
-//                     <div class="recette">
-//                         <p>${nvTableau[i].description}</p>
-//                     </div>
-//                 </div>
-//             `
-    
-//         listPlats.appendChild(wrapper);
-    
-//     }
-
-//     let listeIngredient = document.querySelectorAll('.liste-ingredient');
-
-
-
-//     for(let k = 0; k < listeIngredient.length; k++){
-        
-//         for(let i = 0; i < nvTableau.length; i++){
-            
-//             if( k == i ){
-        
-//                 for(let j=0; j<nvTableau[i].ingredients.length; j++){
-
-//                     let wrapper = document.createElement('p');
-        
-//                     wrapper.innerHTML = `
-//                         <span class="type-ingredient">${ nvTableau[i].ingredients[j].ingredient } </span>
-//                         <span class="nombre-ingredient">: ${nvTableau[i].ingredients[j].quantity ? nvTableau[i].ingredients[j].quantity : nvTableau[i].ingredients[j].quantite } ${ nvTableau[i].ingredients[j].unit ? nvTableau[i].ingredients[j].unit : "" }</span>
-//                     `
-
-//                     if(!nvTableau[i].ingredients[j].quantity && !nvTableau[i].ingredients[j].quantite){
-//                         wrapper.childNodes[3].innerText = "";
-//                     }
-
-//                     listeIngredient[k].appendChild(wrapper);
-        
-//                 }
-//             }
-        
-//         }
-//     }
-// }

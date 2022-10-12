@@ -11,14 +11,18 @@ let recipesActif = recipes;
 
 window.addEventListener('load', function() {
     LoadCard();
-    initialLoadFilter();
+    initialLoadFilter(recipesActif);
 });
         
 globalFilter.addEventListener('input', function(e) {
 
     filterDataLoadingCard(e);
     LoadCard();
-    initialLoadFilter();
+    initialLoadFilter(recipesActif);
+
+    let tagUl = document.querySelector('.tagUl');
+    tagUl.innerHTML = "";
+    tags = [];
 });
 
 
@@ -152,32 +156,29 @@ let filtreIngredient = document.querySelector('#ingredients-filter-div');
 let filtreAppliance = document.querySelector('#appliance-filter-div');
 let filtreUstensils = document.querySelector('#ustensils-filter-div');
 
-function initialLoadFilter(){
-    initialLoadFilterIngredients();
-    initialLoadFilterAppliances();
-    initialLoadFilterUstensils();
+function initialLoadFilter(param){
+    initialLoadFilterIngredients(param);
+    initialLoadFilterAppliances(param);
+    initialLoadFilterUstensils(param);
 }     
-    
-   // quand on clique on ajoute le tag
-   // appel une fonction qui va trier nos recette par rapport liste de tag
-   //fonction qui prend nos list de tag et trie 
-   
-   
+
 
 
                         /*  filtre ingrédient  */
 
-function initialLoadFilterIngredients(){
+function initialLoadFilterIngredients(param){
 
     ingredients = [];
 
     //console.log(recipesActif)
 
-    for(let i=0; i<recipesActif.length; i++){
+    for(let i=0; i<param.length; i++){
 
-        for(let j=0; j<recipesActif[i].ingredients.length; j++){
+        for(let j=0; j<param[i].ingredients.length; j++){
+
+            //console.log(param[i].ingredients);
     
-            let ingredient = recipesActif[i].ingredients[j].ingredient;
+            let ingredient = param[i].ingredients[j].ingredient;
     
             ingredient = ingredient.toLowerCase().replace("î", 'i').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
@@ -186,6 +187,8 @@ function initialLoadFilterIngredients(){
             }
         }
     }
+
+
 
                         /* Intégration filtre ingrédient*/
 
@@ -223,12 +226,12 @@ function initialLoadFilterIngredients(){
     
                         /*  filtre appareils  */
 
-function initialLoadFilterAppliances(){
+function initialLoadFilterAppliances(param){
 
 
-    for(let i=0; i<recipes.length; i++){
+    for(let i=0; i<param.length; i++){
     
-        let appliance = recipes[i].appliance;
+        let appliance = param[i].appliance;
     
         appliance = appliance.toLowerCase();
     
@@ -259,10 +262,9 @@ function initialLoadFilterAppliances(){
             wrapperLiAppliances.addEventListener("click", function(e) {
                 appliancesTag(e);
             })
-            //console.log(wrapperLiAppliances);
+            
             wrapperAppliances.appendChild(wrapperLiAppliances);
         }
-    
     }
 }
         
@@ -270,14 +272,13 @@ function initialLoadFilterAppliances(){
         
                             /*  filtre ustensil  */
 
-function initialLoadFilterUstensils(){
+function initialLoadFilterUstensils(param){
 
+    for(let i=0; i<param.length; i++){
 
-    for(let i=0; i<recipes.length; i++){
+        for(let j=0; j<param[i].ustensils.length; j++){
 
-        for(let j=0; j<recipes[i].ustensils.length; j++){
-
-            let ustensil = recipes[i].ustensils[j];
+            let ustensil = param[i].ustensils[j];
 
             ustensil = ustensil.toLowerCase();
 
@@ -310,7 +311,7 @@ function initialLoadFilterUstensils(){
             
             wrapperLiUstensils.innerText = `${ustensils[i]}`
             wrapperLiUstensils.addEventListener("click", function(e) { 
-                ustensilsTag(e)
+                ustensilsTag(e);
             })
             
             wrapperUstensils.appendChild(wrapperLiUstensils);

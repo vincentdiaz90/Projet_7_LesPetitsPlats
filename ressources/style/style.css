@@ -209,6 +209,9 @@ header img{
 .filter-field{
     padding: 15px 25px;
     width: 100%;
+    color: #f1f1f1;
+    font-size: 18px;
+    letter-spacing: 0.03em;
 }
 
 .filter-field::placeholder{
