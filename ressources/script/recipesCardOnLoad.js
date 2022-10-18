@@ -1,4 +1,4 @@
-//console.log(recipes);
+
 
 const globalFilter = document.querySelector('#champ-recherch');
 
@@ -228,11 +228,12 @@ function initialLoadFilterIngredients(param){
 
 function initialLoadFilterAppliances(param){
 
+    appliances = [];
 
     for(let i=0; i<param.length; i++){
     
         let appliance = param[i].appliance;
-    
+
         appliance = appliance.toLowerCase();
     
         if(!appliances.includes(appliance)){
@@ -253,6 +254,9 @@ function initialLoadFilterAppliances(param){
     filtreAppliance.appendChild(wrapperAppliances);
 
     function filterAppliances(){
+
+        //console.log(appliances);
+
         for(let i = 0; i < appliances.length; i++){
     
             let wrapperLiAppliances = document.createElement('li');
@@ -267,12 +271,13 @@ function initialLoadFilterAppliances(param){
         }
     }
 }
-        
 
         
                             /*  filtre ustensil  */
 
 function initialLoadFilterUstensils(param){
+
+    ustensils = [];
 
     for(let i=0; i<param.length; i++){
 
