@@ -14,10 +14,6 @@ chevronsOpen.forEach(chevron => {
 
 function openListing(e){
 
-    const btnIngredients = document.querySelector("#btn-ingredients");
-    const btnAppareils = document.querySelector("#btn-appareils");
-    const btnUstensiles = document.querySelector("#btn-ustensiles");
-
     const chevronOpenIngredients = document.querySelector(".chevron-open-ingredients");
     const chevronOpenAppareils = document.querySelector(".chevron-open-appareils");
     const chevronOpenUstensiles = document.querySelector(".chevron-open-ustensiles");
@@ -95,8 +91,12 @@ function openActiveListing(){
         chevronAppliances.classList.contains('filter-open-chevron') ||
         chevronUstensils.classList.contains('filter-open-chevron')
     ){
-        listingIngredientAppliancesUstensils.style.height = "280px";
-    }
+        if(window.matchMedia("(min-width: 740px)").matches){
+            listingIngredientAppliancesUstensils.style.height = "280px";
+        } else {
+            listingIngredientAppliancesUstensils.style.height = "580px";
+        }
+    } 
 
 
     if(chevronIngredients.classList.contains('filter-open-chevron')){
@@ -106,9 +106,18 @@ function openActiveListing(){
 
         btnIngredients.classList.add('active');
 
-        divIngredients.style.width = "50%";
-        divAppliances.style.width = "200px";
-        divUtensils.style.width = "200px";
+        if(window.matchMedia("(min-width: 740px)").matches){
+            divIngredients.style.width = "50%";
+            divAppliances.style.width = "200px";
+            divUtensils.style.width = "200px";
+        } else {
+            divIngredients.style.width = "90%";
+            divIngredients.style.marginTop = "0px";
+            divAppliances.style.width = "200px";
+            divAppliances.style.marginTop = "230px";
+            divUtensils.style.width = "200px";
+            divUtensils.style.marginTop = "0px";
+        }
 
         chevronAppliances.classList.remove("active");
         chevronUstensils.classList.remove("active");
@@ -121,6 +130,19 @@ function openActiveListing(){
         searchUstensiles.classList.remove('active');
         searchAppareils.classList.add('active');
         btnAppareils.classList.add('active');
+
+        if(window.matchMedia("(min-width: 740px)").matches){
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "480px";
+            divUtensils.style.width = "200px";
+        } else {
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "90%";
+            divUtensils.style.width = "200px";
+            divIngredients.style.marginTop = "0px";
+            divAppliances.style.marginTop = "0px";
+            divUtensils.style.marginTop = "230px";
+        }
 
         divIngredients.style.width = "200px";
         divAppliances.style.width = "480px";
@@ -136,6 +158,19 @@ function openActiveListing(){
         searchAppareils.classList.remove('active');
         searchUstensiles.classList.add('active');
         btnUstensiles.classList.add('active');
+
+        if(window.matchMedia("(min-width: 740px)").matches){
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "200px";
+            divUtensils.style.width = "480px";
+        } else {
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "200px";
+            divUtensils.style.width = "90%";
+            divIngredients.style.marginTop = "0px";
+            divAppliances.style.marginTop = "0px";
+            divUtensils.style.marginBottom = "230px";
+        }
 
         divIngredients.style.width = "200px";
         divAppliances.style.width = "200px";
@@ -164,11 +199,29 @@ function openActiveListing(){
         btnAppareils.classList.remove('active');
         btnUstensiles.classList.remove('active');
 
+        if(window.matchMedia("(min-width: 740px)").matches){
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "200px";
+            divUtensils.style.width = "200px";    
+        } else {
+            divIngredients.style.width = "200px";
+            divAppliances.style.width = "200px";
+            divUtensils.style.width = "200px";    
+            divIngredients.style.marginTop = "0px";
+            divAppliances.style.marginTop = "0px";
+            divUtensils.style.marginTop = "0px";
+            divUtensils.style.marginBottom = "0px";
+        }
+
         divIngredients.style.width = "200px";
         divAppliances.style.width = "200px";
         divUtensils.style.width = "200px";
 
-        listingIngredientAppliancesUstensils.style.height = "100px";
+        if(window.matchMedia("(min-width: 740px)").matches){
+            listingIngredientAppliancesUstensils.style.height = "100px";
+        } else {
+            listingIngredientAppliancesUstensils.style.height = "350px";
+        }
     }
 
 

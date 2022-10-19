@@ -178,9 +178,7 @@ function initialLoadFilterIngredients(param){
 
             //console.log(param[i].ingredients);
     
-            let ingredient = param[i].ingredients[j].ingredient;
-    
-            ingredient = ingredient.toLowerCase().replace("î", 'i').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let ingredient = param[i].ingredients[j].ingredient.toLowerCase();
     
             if(!ingredients.includes(ingredient)){
                 ingredients.push(ingredient);
@@ -222,6 +220,8 @@ function initialLoadFilterIngredients(param){
         }
         
     }
+
+    displayNoneTag();
 }       
     
                         /*  filtre appareils  */
@@ -232,9 +232,7 @@ function initialLoadFilterAppliances(param){
 
     for(let i=0; i<param.length; i++){
     
-        let appliance = param[i].appliance;
-
-        appliance = appliance.toLowerCase();
+        let appliance = param[i].appliance.toLowerCase();
     
         if(!appliances.includes(appliance)){
             appliances.push(appliance);
@@ -270,6 +268,7 @@ function initialLoadFilterAppliances(param){
             wrapperAppliances.appendChild(wrapperLiAppliances);
         }
     }
+    displayNoneTag();
 }
 
         
@@ -283,9 +282,7 @@ function initialLoadFilterUstensils(param){
 
         for(let j=0; j<param[i].ustensils.length; j++){
 
-            let ustensil = param[i].ustensils[j];
-
-            ustensil = ustensil.toLowerCase();
+            let ustensil = param[i].ustensils[j].toLowerCase();
 
             if(!ustensils.includes(ustensil)){
                 ustensils.push(ustensil);
@@ -322,4 +319,5 @@ function initialLoadFilterUstensils(param){
             wrapperUstensils.appendChild(wrapperLiUstensils);
         }
     }
+    displayNoneTag();
 }

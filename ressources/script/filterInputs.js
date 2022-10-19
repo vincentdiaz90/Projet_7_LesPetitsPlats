@@ -33,37 +33,14 @@ function ustensilsTag(e){
     deletTag();
 }
 
-
-function createTag(tagName){
-
-    let divTagUl = document.querySelector('.tagUl');
-
-    let wrapperLiTag;
-    let wrapperLiTagCross;
-
-    wrapperLiTag = document.createElement('li');
-    wrapperLiTag.classList.add('tagLi');
-    wrapperLiTag.setAttribute("tagName", tagName);
-
-    wrapperLiTag.innerText = `${tagName}`;
-
-    wrapperLiTagCross = document.createElement('i');
-    wrapperLiTagCross.classList.add('fa-solid');
-    wrapperLiTagCross.classList.add('fa-x');
-
-    wrapperLiTag.appendChild(wrapperLiTagCross);
-
-    divTagUl.appendChild(wrapperLiTag);
-
-
-
+function displayNoneTag(){
     let ingredientsFiltreActif = document.querySelectorAll("#ingredients-filter-type .nom-filtre");
 
     let wrapperLiTagEnsemble = document.querySelectorAll(".tagLi");
 
     ingredientsFiltreActif.forEach(ingredientFiltreActif => {
         wrapperLiTagEnsemble.forEach(wrapperLiTagUnique => {          
-            if(wrapperLiTagUnique.innerText == ingredientFiltreActif.innerText.toLowerCase()){
+            if(wrapperLiTagUnique.innerText.toLowerCase() == ingredientFiltreActif.innerText.toLowerCase()){
                 ingredientFiltreActif.style.display = "none";
             }
         });
@@ -88,11 +65,38 @@ function createTag(tagName){
             }
         });
     });
+}
+
+
+
+function createTag(tagName){
+
+    let divTagUl = document.querySelector('.tagUl');
+
+    let wrapperLiTag;
+    let wrapperLiTagCross;
+
+    wrapperLiTag = document.createElement('li');
+    wrapperLiTag.classList.add('tagLi');
+    wrapperLiTag.setAttribute("tagName", tagName);
+
+    wrapperLiTag.innerText = `${tagName}`;
+
+    wrapperLiTagCross = document.createElement('i');
+    wrapperLiTagCross.classList.add('fa-solid');
+    wrapperLiTagCross.classList.add('fa-x');
+
+    wrapperLiTag.appendChild(wrapperLiTagCross);
+
+    divTagUl.appendChild(wrapperLiTag);
+
+    displayNoneTag();
 
     const globalFilter = document.querySelector('#champ-recherch');
 
     globalFilter.value = "";
 
+    recipesActif = recipes;
 }
 
 function deletTag(){
