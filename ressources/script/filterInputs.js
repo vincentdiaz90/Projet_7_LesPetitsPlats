@@ -33,6 +33,8 @@ function ustensilsTag(e){
     deletTag();
 }
 
+    // Fonction qui permet de faire disparaitre un element dans un filtre si il est présent dans les tags
+
 function displayNoneTag(){
     let ingredientsFiltreActif = document.querySelectorAll("#ingredients-filter-type .nom-filtre");
 
@@ -68,6 +70,7 @@ function displayNoneTag(){
 }
 
 
+    // Fonction qui permet de créer les tags au desus des 3 inputs
 
 function createTag(tagName){
 
@@ -98,6 +101,8 @@ function createTag(tagName){
 
     recipesActif = recipes;
 }
+
+    // Fonction qui permet de supprimer le tag selectionné au desus des 3 inputs via la croix
 
 function deletTag(){
 

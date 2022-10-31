@@ -26,6 +26,8 @@ globalFilter.addEventListener('input', function(e) {
 });
 
 
+    // Création du filtre général
+    // On part du fichier des recettes global,on boucle dessus puis si la condition n'est pas respectée au enlève la recette
 
 function filterDataLoadingCard(e){
 
@@ -82,6 +84,8 @@ function filterDataLoadingCard(e){
 
 
 
+
+    // Fonction qui permet d'intégrer les recettes
 
 function LoadCard(){
     const listPlats = document.querySelector('#liste-plats');
@@ -146,7 +150,7 @@ function LoadCard(){
  
         
         
-                    /*  Intégration filtre dynamique  */
+                    /*  Intégration filtre input  */
 
 let ingredients = [];
 let appliances = [];
@@ -169,8 +173,6 @@ function initialLoadFilter(param){
 function initialLoadFilterIngredients(param){
 
     ingredients = [];
-
-    //console.log(recipesActif)
 
     for(let i=0; i<param.length; i++){
 
@@ -203,8 +205,6 @@ function initialLoadFilterIngredients(param){
 
 
     function filterIngredients(){
-
-        //console.log(ingredients);
         
         for(let i = 0; i < ingredients.length; i++){
     

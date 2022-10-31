@@ -21,8 +21,6 @@ function openListing(e){
     let chevron= e.target;
 
     if(chevron.classList.contains('chevron-open-ingredients')){
-        chevronOpenAppareils.classList.remove('filter-open-chevron');
-        chevronOpenUstensiles.classList.remove('filter-open-chevron');
         chevronOpenIngredients.classList.toggle('filter-open-chevron');
     
         chevronOpenIngredients.classList.toggle('filter-open-chevron-active');
