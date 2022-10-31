@@ -2,7 +2,7 @@
 
 const globalFilter = document.querySelector('#champ-recherch');
 
-let recipesActif = recipes;
+let recipesActif;
 
 
 
@@ -10,20 +10,44 @@ let recipesActif = recipes;
 
 
 window.addEventListener('load', function() {
+    tabRecetteSecondaryInput();
     LoadCard();
     initialLoadFilter(recipesActif);
 });
         
 globalFilter.addEventListener('input', function(e) {
 
-    filterDataLoadingCard(e);
-    LoadCard();
-    initialLoadFilter(recipesActif);
+    tabRecetteSecondaryInput();
 
-    let tagUl = document.querySelector('.tagUl');
-    tagUl.innerHTML = "";
-    tags = [];
+    if(e.target.value.length >= 3){
+        filterDataLoadingCard(e);
+        LoadCard();
+        initialLoadFilter(recipesActif);
+    
+        // let tagUl = document.querySelector('.tagUl');
+        // tagUl.innerHTML = "";
+        // tags = [];
+    } else {
+
+        const listPlats = document.querySelector('#liste-plats');
+        listPlats.innerHTML = "";
+        recipesActif = recipes;
+
+        LoadCard();
+        initialLoadFilter(recipesActif);
+    }
+
 });
+
+function tabRecetteSecondaryInput() {
+    if(recipesForActifTag.length != 0){
+        recipesActif = recipesForActifTag;
+    } else {
+        recipesActif = recipes;
+    }
+    console.log('recipesForActifTag', recipesForActifTag.length)
+    console.log('recipesActif', recipesActif);
+}
 
 
     // Création du filtre général
@@ -38,6 +62,8 @@ function filterDataLoadingCard(e){
     listPlats.innerHTML = "";
 
     recipesActif = [];
+
+    //console.log(recipesFilter);
 
 
     for(element of recipes){
@@ -79,6 +105,15 @@ function filterDataLoadingCard(e){
                 recipesActif.push(element);                
             }
         }
+    }
+
+    if(recipesActif.length == 0){
+        let wrapper = document.createElement('p');
+        wrapper.classList.add('listRecetteVide');
+
+        wrapper.innerText = `Désolé auncune recette ne correspond à votre recherche`
+
+        listPlats.appendChild(wrapper);
     }
 }
 

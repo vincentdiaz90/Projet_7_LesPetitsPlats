@@ -2,6 +2,7 @@
 
 let tags = [];
 let liTag= [];
+let recipesForActifTag = [];
 
 let uniqueValeurTag;
 
@@ -95,11 +96,13 @@ function createTag(tagName){
 
     displayNoneTag();
 
-    const globalFilter = document.querySelector('#champ-recherch');
+    //const globalFilter = document.querySelector('#champ-recherch');
 
-    globalFilter.value = "";
+    //globalFilter.value = "";
 
-    recipesActif = recipes;
+    //recipesActif = recipes;
+
+    tabRecettePrimaryInput();
 }
 
     // Fonction qui permet de supprimer le tag selectionné au desus des 3 inputs via la croix
@@ -150,6 +153,38 @@ function deletTag(){
         });
     });
 
+    tabRecettePrimaryInput();
+/*
+    globalFilter.addEventListener('change', function(e) {
+
+        if(e.target.value.length >= 3){
+            filterDataLoadingCard(e);
+            LoadCard();
+            initialLoadFilter(recipesActif);
+        
+        } else {
+    
+            const listPlats = document.querySelector('#liste-plats');
+            listPlats.innerHTML = "";
+    
+            LoadCard();
+            initialLoadFilter(recipesActif);
+        }
+    })*/
+}
+
+function tabRecettePrimaryInput() {
+
+    const tagLi = document.querySelectorAll('.tagLi');
+
+    console.log(tagLi.length);
+
+    if(tagLi.length != 0){
+        recipesForActifTag = recipesActif;
+    } else {
+        recipesForActifTag = recipes;
+    }
+    console.log(recipesForActifTag);
 }
 
 
@@ -176,8 +211,6 @@ appliancesFilter.addEventListener('input', function(e) {
 ustensilsFilter.addEventListener('input', function(e) {
     filterDataLoadingUstensilsTag(e);
 })
-
-
 
 
 
@@ -239,12 +272,12 @@ function filterDataLoadingUstensilsTag(e) {
         /*  Filtre des cartes par les tags */
 
 
-function filterTags() {
+function filterTags(e) {
 
         // Intégration dans un tableau des tags actifs
 
     
-    let recipesForActifTag = [];
+    recipesForActifTag = [];
 
     recipes.forEach(recipe => {  
 
