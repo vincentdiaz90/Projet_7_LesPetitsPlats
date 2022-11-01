@@ -91,14 +91,17 @@ header img{
 
 .fa-x{
     position: absolute;
-    top: 50%;
+    top: 10%;
     transform: translateY(-50%);
-    right: 8%;
+    right: 3%;
     font-size: 8px;
     cursor: pointer;
-    border: 1px solid #f1f1f1;
+    border: 3px solid #f1f1f1;
     border-radius: 50%;
     padding: 3px;
+    font-weight: 900;
+    font-size: 30px;
+    transform: scale(0.4);
 }
 
 
