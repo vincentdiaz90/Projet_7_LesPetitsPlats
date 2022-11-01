@@ -158,6 +158,15 @@ function deletTag(){
         });
     });
 
+    initialLoadFilter(recipesConjoint);
+
+    if(liTags.length == 0 && globalFilter.length <3){
+        console.log(globalFilter);
+        recipesConjoint == recipes;
+        recipesForActifTag == recipes
+    }
+    
+
 }
 
 
@@ -290,7 +299,7 @@ function filterTags(e) {
 
     recipesForActifTag = [...new Set(recipesForActifTag)];
 
-    tabConjoint()
+    tabConjoint();
     
         // Intégration des cartes correspondant aux tags dans le tableau
 
@@ -353,7 +362,7 @@ function filterTags(e) {
         }
         initialLoadFilter(recipesConjoint);
     } else {
-        LoadCard();
-        initialLoadFilter(recipesConjoint);
+        LoadCard(recipesActif);
+        initialLoadFilter(recipesActif);
     }
 }

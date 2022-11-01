@@ -8,29 +8,28 @@ let recipesActif;
 
 
 window.addEventListener('load', function() {
+    recipesActif = recipes
     recipesConjoint = recipes;
-    LoadCard();
-    initialLoadFilter(recipesConjoint);
+    LoadCard(recipes);
+    initialLoadFilter(recipes);
 });
         
 globalFilter.addEventListener('input', function(e) {
     
-    
+    recipesActif = recipes
 
-    if(e.target.value.length >= 0){
+    if(e.target.value.length >= 3){
         filterDataLoadingCard(e);
         tabConjoint();
-        console.log(recipesConjoint);
-        LoadCard();
+        LoadCard(recipesConjoint);
         initialLoadFilter(recipesConjoint);
     
     } else {
 
         const listPlats = document.querySelector('#liste-plats');
         listPlats.innerHTML = "";
-
-        LoadCard();
-        initialLoadFilter(recipesConjoint);
+        LoadCard(recipesForActifTag);
+        initialLoadFilter(recipesForActifTag);
     }
 
 });
@@ -92,15 +91,6 @@ function filterDataLoadingCard(e){
             }
         }
     }
-
-    if(recipesActif.length == 0){
-        let wrapper = document.createElement('p');
-        wrapper.classList.add('listRecetteVide');
-
-        wrapper.innerText = `Désolé auncune recette ne correspond à votre recherche`
-
-        listPlats.appendChild(wrapper);
-    }
 }
 
 
@@ -108,11 +98,11 @@ function filterDataLoadingCard(e){
 
     // Fonction qui permet d'intégrer les recettes
 
-function LoadCard(){
+function LoadCard(param){
     const listPlats = document.querySelector('#liste-plats');
 
 
-    for(let i = 0; i < recipesConjoint.length; i++){  
+    for(let i = 0; i < param.length; i++){  
     
         let wrapper = document.createElement('article');
         wrapper.classList.add('plat');
@@ -120,14 +110,14 @@ function LoadCard(){
             wrapper.innerHTML = `
                 <div class="image-plat"></div>
                 <div class="description-plat">
-                    <h2 class="titre-plat">${recipesConjoint[i].name}</h2>
+                    <h2 class="titre-plat">${param[i].name}</h2>
                     <p class="temps-preparation">
                         <i class="fas fa-light fa-clock"></i>
-                        <span>${recipesConjoint[i].time} min</span>
+                        <span>${param[i].time} min</span>
                     </p>
                     <div class="liste-ingredient"></div>
                     <div class="recette">
-                        <p>${recipesConjoint[i].description}</p>
+                        <p>${param[i].description}</p>
                     </div>
                 </div>
             `
@@ -142,20 +132,20 @@ function LoadCard(){
 
     for(let k = 0; k < listeIngredient.length; k++){
         
-        for(let i = 0; i < recipesConjoint.length; i++){
+        for(let i = 0; i < param.length; i++){
             
             if( k == i ){
         
-                for(let j=0; j<recipesConjoint[i].ingredients.length; j++){
+                for(let j=0; j<param[i].ingredients.length; j++){
 
                     let wrapper = document.createElement('p');
         
                     wrapper.innerHTML = `
-                        <span class="type-ingredient">${ recipesConjoint[i].ingredients[j].ingredient } </span>
-                        <span class="nombre-ingredient">: ${ recipesConjoint[i].ingredients[j].quantity ? recipesConjoint[i].ingredients[j].quantity : recipesConjoint[i].ingredients[j].quantite } ${ recipesConjoint[i].ingredients[j].unit ? recipesConjoint[i].ingredients[j].unit : "" }</span>
+                        <span class="type-ingredient">${ param[i].ingredients[j].ingredient } </span>
+                        <span class="nombre-ingredient">: ${ param[i].ingredients[j].quantity ? param[i].ingredients[j].quantity : param[i].ingredients[j].quantite } ${ param[i].ingredients[j].unit ? param[i].ingredients[j].unit : "" }</span>
                     `
 
-                    if(!recipesConjoint[i].ingredients[j].quantity && !recipesConjoint[i].ingredients[j].quantite){
+                    if(!param[i].ingredients[j].quantity && !param[i].ingredients[j].quantite){
                         wrapper.childNodes[3].innerText = "";
                     }
 
