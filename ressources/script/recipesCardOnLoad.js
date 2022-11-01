@@ -4,50 +4,36 @@ const globalFilter = document.querySelector('#champ-recherch');
 
 let recipesActif;
 
-
-
         /*  Intégration carte dynamique  */
 
 
 window.addEventListener('load', function() {
-    tabRecetteSecondaryInput();
+    recipesConjoint = recipes;
     LoadCard();
-    initialLoadFilter(recipesActif);
+    initialLoadFilter(recipesConjoint);
 });
         
 globalFilter.addEventListener('input', function(e) {
-
-    tabRecetteSecondaryInput();
-
-    if(e.target.value.length >= 3){
-        filterDataLoadingCard(e);
-        LoadCard();
-        initialLoadFilter(recipesActif);
     
-        // let tagUl = document.querySelector('.tagUl');
-        // tagUl.innerHTML = "";
-        // tags = [];
+    
+
+    if(e.target.value.length >= 0){
+        filterDataLoadingCard(e);
+        tabConjoint();
+        console.log(recipesConjoint);
+        LoadCard();
+        initialLoadFilter(recipesConjoint);
+    
     } else {
 
         const listPlats = document.querySelector('#liste-plats');
         listPlats.innerHTML = "";
-        recipesActif = recipes;
 
         LoadCard();
-        initialLoadFilter(recipesActif);
+        initialLoadFilter(recipesConjoint);
     }
 
 });
-
-function tabRecetteSecondaryInput() {
-    if(recipesForActifTag.length != 0){
-        recipesActif = recipesForActifTag;
-    } else {
-        recipesActif = recipes;
-    }
-    console.log('recipesForActifTag', recipesForActifTag.length)
-    console.log('recipesActif', recipesActif);
-}
 
 
     // Création du filtre général
@@ -66,7 +52,7 @@ function filterDataLoadingCard(e){
     //console.log(recipesFilter);
 
 
-    for(element of recipes){
+    for(let element of recipes){
         let valide = false;
         if(element.name.toLowerCase().includes(filterActive)){
             valide = true;
@@ -74,7 +60,7 @@ function filterDataLoadingCard(e){
         } 
         
         if(valide == false) {
-            for(ingredient of element.ingredients){
+            for(let ingredient of element.ingredients){
                 if(ingredient.ingredient.toLowerCase().includes(filterActive)){ 
                     recipesActif.push(element);
                     valide = true;
@@ -91,7 +77,7 @@ function filterDataLoadingCard(e){
         }
         
         if(valide == false){
-            for(ustensil of element.ustensils){
+            for(let ustensil of element.ustensils){
                 if(ustensil.toLowerCase().includes(filterActive)){
                     recipesActif.push(element);
                     valide = true;                   
@@ -125,7 +111,8 @@ function filterDataLoadingCard(e){
 function LoadCard(){
     const listPlats = document.querySelector('#liste-plats');
 
-    for(let i = 0; i < recipesActif.length; i++){  
+
+    for(let i = 0; i < recipesConjoint.length; i++){  
     
         let wrapper = document.createElement('article');
         wrapper.classList.add('plat');
@@ -133,14 +120,14 @@ function LoadCard(){
             wrapper.innerHTML = `
                 <div class="image-plat"></div>
                 <div class="description-plat">
-                    <h2 class="titre-plat">${recipesActif[i].name}</h2>
+                    <h2 class="titre-plat">${recipesConjoint[i].name}</h2>
                     <p class="temps-preparation">
                         <i class="fas fa-light fa-clock"></i>
-                        <span>${recipesActif[i].time} min</span>
+                        <span>${recipesConjoint[i].time} min</span>
                     </p>
                     <div class="liste-ingredient"></div>
                     <div class="recette">
-                        <p>${recipesActif[i].description}</p>
+                        <p>${recipesConjoint[i].description}</p>
                     </div>
                 </div>
             `
@@ -155,20 +142,20 @@ function LoadCard(){
 
     for(let k = 0; k < listeIngredient.length; k++){
         
-        for(let i = 0; i < recipesActif.length; i++){
+        for(let i = 0; i < recipesConjoint.length; i++){
             
             if( k == i ){
         
-                for(let j=0; j<recipesActif[i].ingredients.length; j++){
+                for(let j=0; j<recipesConjoint[i].ingredients.length; j++){
 
                     let wrapper = document.createElement('p');
         
                     wrapper.innerHTML = `
-                        <span class="type-ingredient">${ recipesActif[i].ingredients[j].ingredient } </span>
-                        <span class="nombre-ingredient">: ${ recipesActif[i].ingredients[j].quantity ? recipesActif[i].ingredients[j].quantity : recipesActif[i].ingredients[j].quantite } ${ recipesActif[i].ingredients[j].unit ? recipesActif[i].ingredients[j].unit : "" }</span>
+                        <span class="type-ingredient">${ recipesConjoint[i].ingredients[j].ingredient } </span>
+                        <span class="nombre-ingredient">: ${ recipesConjoint[i].ingredients[j].quantity ? recipesConjoint[i].ingredients[j].quantity : recipesConjoint[i].ingredients[j].quantite } ${ recipesConjoint[i].ingredients[j].unit ? recipesConjoint[i].ingredients[j].unit : "" }</span>
                     `
 
-                    if(!recipesActif[i].ingredients[j].quantity && !recipesActif[i].ingredients[j].quantite){
+                    if(!recipesConjoint[i].ingredients[j].quantity && !recipesConjoint[i].ingredients[j].quantite){
                         wrapper.childNodes[3].innerText = "";
                     }
 

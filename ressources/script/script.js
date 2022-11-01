@@ -90,7 +90,7 @@ function openActiveListing(){
         chevronUstensils.classList.contains('filter-open-chevron')
     ){
         if(window.matchMedia("(min-width: 740px)").matches){
-            listingIngredientAppliancesUstensils.style.height = "280px";
+            listingIngredientAppliancesUstensils.style.height = "380px";
         } else {
             listingIngredientAppliancesUstensils.style.height = "580px";
         }

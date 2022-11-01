@@ -2,7 +2,7 @@
 
 let tags = [];
 let liTag= [];
-let recipesForActifTag = [];
+let recipesForActifTag = recipes;
 
 let uniqueValeurTag;
 
@@ -10,8 +10,9 @@ let uniqueValeurTag;
 function ingredientsTag(e){
     
     let variable = e.target.innerText;
+    let variableType = 'ingredients';
     tags.push('ingredients_' + variable);
-    createTag(variable);
+    createTag(variable, variableType);
     filterTags();
     deletTag();
 }
@@ -19,8 +20,9 @@ function ingredientsTag(e){
 function appliancesTag(e){
 
     let variable = e.target.innerText;
+    let variableType = 'appliances';
     tags.push('appliances_'+variable);
-    createTag(variable);
+    createTag(variable, variableType);
     filterTags();
     deletTag();
 }
@@ -28,8 +30,9 @@ function appliancesTag(e){
 function ustensilsTag(e){
 
     let variable = e.target.innerText;
+    let variableType = 'ustensils';
     tags.push('ustensils_'+variable);
-    createTag(variable);
+    createTag(variable, variableType);
     filterTags();
     deletTag();
 }
@@ -73,7 +76,7 @@ function displayNoneTag(){
 
     // Fonction qui permet de créer les tags au desus des 3 inputs
 
-function createTag(tagName){
+function createTag(tagName, variableType){
 
     let divTagUl = document.querySelector('.tagUl');
 
@@ -81,8 +84,17 @@ function createTag(tagName){
     let wrapperLiTagCross;
 
     wrapperLiTag = document.createElement('li');
+
     wrapperLiTag.classList.add('tagLi');
     wrapperLiTag.setAttribute("tagName", tagName);
+
+    if(variableType == "ingredients"){
+        wrapperLiTag.classList.add('tagIngredientsCustom');
+    } else if(variableType == "appliances"){
+        wrapperLiTag.classList.add('tagAppliancesCustom');
+    } else if(variableType == "ustensils"){
+        wrapperLiTag.classList.add('tagUstensilsCustom');
+    }
 
     wrapperLiTag.innerText = `${tagName}`;
 
@@ -96,13 +108,6 @@ function createTag(tagName){
 
     displayNoneTag();
 
-    //const globalFilter = document.querySelector('#champ-recherch');
-
-    //globalFilter.value = "";
-
-    //recipesActif = recipes;
-
-    tabRecettePrimaryInput();
 }
 
     // Fonction qui permet de supprimer le tag selectionné au desus des 3 inputs via la croix
@@ -153,38 +158,6 @@ function deletTag(){
         });
     });
 
-    tabRecettePrimaryInput();
-/*
-    globalFilter.addEventListener('change', function(e) {
-
-        if(e.target.value.length >= 3){
-            filterDataLoadingCard(e);
-            LoadCard();
-            initialLoadFilter(recipesActif);
-        
-        } else {
-    
-            const listPlats = document.querySelector('#liste-plats');
-            listPlats.innerHTML = "";
-    
-            LoadCard();
-            initialLoadFilter(recipesActif);
-        }
-    })*/
-}
-
-function tabRecettePrimaryInput() {
-
-    const tagLi = document.querySelectorAll('.tagLi');
-
-    console.log(tagLi.length);
-
-    if(tagLi.length != 0){
-        recipesForActifTag = recipesActif;
-    } else {
-        recipesForActifTag = recipes;
-    }
-    console.log(recipesForActifTag);
 }
 
 
@@ -230,9 +203,6 @@ function filterDataLoadingIngredientsTag(e){
 
 
 }
-
-
-
   
 
 function filterDataLoadingAppliancesTag(e) {
@@ -320,7 +290,7 @@ function filterTags(e) {
 
     recipesForActifTag = [...new Set(recipesForActifTag)];
 
-
+    tabConjoint()
     
         // Intégration des cartes correspondant aux tags dans le tableau
 
@@ -329,7 +299,7 @@ function filterTags(e) {
 
     if(tags.length != 0){
 
-        recipesForActifTag.forEach(element => {
+        recipesConjoint.forEach(element => {
             let wrapper = document.createElement('article');
             wrapper.classList.add('plat');
         
@@ -357,20 +327,20 @@ function filterTags(e) {
     
         for(let k = 0; k < listeIngredient.length; k++){
             
-            for(let i = 0; i < recipesForActifTag.length; i++){
+            for(let i = 0; i < recipesConjoint.length; i++){
                 
                 if( k == i ){
             
-                    for(let j=0; j<recipesForActifTag[i].ingredients.length; j++){
+                    for(let j=0; j<recipesConjoint[i].ingredients.length; j++){
     
                         let wrapper = document.createElement('p');
             
                         wrapper.innerHTML = `
-                            <span class="type-ingredient">${ recipesForActifTag[i].ingredients[j].ingredient } </span>
-                            <span class="nombre-ingredient">: ${ recipesForActifTag[i].ingredients[j].quantity ? recipesForActifTag[i].ingredients[j].quantity : recipesForActifTag[i].ingredients[j].quantite } ${ recipesForActifTag[i].ingredients[j].unit ? recipesForActifTag[i].ingredients[j].unit : "" }</span>
+                            <span class="type-ingredient">${ recipesConjoint[i].ingredients[j].ingredient } </span>
+                            <span class="nombre-ingredient">: ${ recipesConjoint[i].ingredients[j].quantity ? recipesConjoint[i].ingredients[j].quantity : recipesConjoint[i].ingredients[j].quantite } ${ recipesConjoint[i].ingredients[j].unit ? recipesConjoint[i].ingredients[j].unit : "" }</span>
                         `
     
-                        if(!recipesForActifTag[i].ingredients[j].quantity && !recipesForActifTag[i].ingredients[j].quantite){
+                        if(!recipesConjoint[i].ingredients[j].quantity && !recipesConjoint[i].ingredients[j].quantite){
                             wrapper.childNodes[3].innerText = "";
                         }
     
@@ -381,11 +351,9 @@ function filterTags(e) {
             
             }
         }
-        initialLoadFilter(recipesForActifTag);
+        initialLoadFilter(recipesConjoint);
     } else {
         LoadCard();
-        initialLoadFilter(recipesActif);
+        initialLoadFilter(recipesConjoint);
     }
-
-    return recipesForActifTag;
 }
