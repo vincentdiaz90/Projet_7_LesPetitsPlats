@@ -38,59 +38,60 @@ globalFilter.addEventListener('input', function(e) {
     // Création du filtre général
     // On part du fichier des recettes global,on boucle dessus puis si la condition n'est pas respectée au enlève la recette
 
+function valideFilter(element){
+
+    const champRecherch = document.querySelector('#champ-recherch');
+
+    let filterActive = champRecherch.value.toLowerCase();
+
+    let valide = false;
+    if(element.name.toLowerCase().includes(filterActive)){
+        valide = true;
+    } 
+    
+    if(valide == false) {
+        for(ingredient of element.ingredients){
+            if(ingredient.ingredient.toLowerCase().includes(filterActive)){ 
+                valide = true;
+                break;
+            }
+        }
+    }
+    
+    if(valide == false){
+        if(element.appliance.toLowerCase().includes(filterActive)){
+            valide = true;
+        }
+    }
+    
+    if(valide == false){
+        for(ustensil of element.ustensils){
+            if(ustensil.toLowerCase().includes(filterActive)){
+                valide = true;                   
+                break;                
+            }
+        }
+    }
+    
+    if(valide == false) {
+        if(element.description.toLowerCase().includes(filterActive)){
+                valide = true;            
+        }
+    }
+    
+    return valide;
+    
+}
+
 function filterDataLoadingCard(e){
 
     const listPlats = document.querySelector('#liste-plats');
-
-    let filterActive = e.target.value.toLowerCase();
 
     listPlats.innerHTML = "";
 
     recipesActif = [];
 
-    //console.log(recipesFilter);
-
-
-    for(let element of recipes){
-        let valide = false;
-        if(element.name.toLowerCase().includes(filterActive)){
-            valide = true;
-            recipesActif.push(element);
-        } 
-        
-        if(valide == false) {
-            for(let ingredient of element.ingredients){
-                if(ingredient.ingredient.toLowerCase().includes(filterActive)){ 
-                    recipesActif.push(element);
-                    valide = true;
-                    break;
-                }
-            }
-        }
-        
-        if(valide == false){
-            if(element.appliance.toLowerCase().includes(filterActive)){
-                valide = true;
-                recipesActif.push(element); 
-            }
-        }
-        
-        if(valide == false){
-            for(let ustensil of element.ustensils){
-                if(ustensil.toLowerCase().includes(filterActive)){
-                    recipesActif.push(element);
-                    valide = true;                   
-                    break;                
-                }
-            }
-        }
-        
-        if(valide == false) {
-            if(element.description.toLowerCase().includes(filterActive)){
-                recipesActif.push(element);                
-            }
-        }
-    }
+    recipesActif = recipes.filter(valideFilter);
 }
 
 
